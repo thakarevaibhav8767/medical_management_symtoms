@@ -1,0 +1,104 @@
+<!--<!DOCTYPE html>-->
+<!--<html lang="en">-->
+<!--<head>-->
+<!--    <meta charset="UTF-8">-->
+<!--    <title>Title</title>-->
+<!--</head>-->
+<!--<body>-->
+<!--<form action="{% url 'updatemed' %}" method="POST">-->
+<!--    {% csrf_token %}-->
+<!--    <table>-->
+<!--        <tr>-->
+<!--            <th>Med Id: </th>-->
+<!--            <th><input  type="number" name="mid" value="{{b3.med_Id}}"></th>-->
+<!--        </tr>-->
+<!--         <tr>-->
+<!--            <th colspan="2"><input type="submit" value="Search"></th>-->
+<!--        </tr>-->
+
+<!--        <tr>-->
+<!--            <th>Med Name : </th>-->
+<!--            <th><input type="text" name="mname" value="{{b3.med_Name}}"> </th>-->
+<!--        </tr>-->
+<!--        <tr>-->
+<!--            <th>Quantity : </th>-->
+<!--            <th><input type="text" name="qun" value="{{b3.Available_quantity}}"></th>-->
+<!--        </tr>-->
+<!--        <tr>-->
+<!--            <th>Price : </th>-->
+<!--            <th><input type="number" name="prc"  value="{{b3.Price}}"></th>-->
+<!--        </tr>-->
+<!--        <tr>-->
+<!--            <th>Mfg_Date : </th>-->
+<!--            <th><input type="date" name="mfgdt" value="{{b3.mfg_Date}}"></th>-->
+<!--        </tr>-->
+<!--        <tr>-->
+<!--            <th>Exp_Date : </th>-->
+<!--            <th><input type="date" name="expdt" value="{{b3.Exp_Date}}"></th>-->
+<!--        </tr>-->
+<!--         <tr>-->
+<!--            <th colspan="2"><input type="submit" value="Submit"></th>-->
+<!--        </tr>-->
+
+<!--    </table>-->
+<!--</form>-->
+<!--<h1>{{msg}}</h1>-->
+
+<!--</body>-->
+<!--</html>-->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Update Medicine</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- FontAwesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="bg-light">
+<div class="container mt-5">
+    <div class="card shadow p-4">
+        <h2 class="text-center">Update Medicine</h2>
+        <form action="{% url 'updatemed' %}" method="POST">
+            {% csrf_token %}
+            <div class="mb-3">
+                <label class="form-label"><i class="fas fa-barcode"></i> Med Id:</label>
+                <input type="number" class="form-control" name="mid" value="{{b3.med_Id}}" required>
+            </div>
+            <div class="text-center mb-3">
+                <button type="submit" class="btn btn-primary"><i class="fas fa-search"></i> Search</button>
+            </div>
+            <div class="mb-3">
+                <label class="form-label"><i class="fas fa-pills"></i> Med Name:</label>
+                <input type="text" class="form-control" name="mname" value="{{b3.med_Name}}" required>
+            </div>
+            <div class="mb-3">
+                <label class="form-label"><i class="fas fa-box"></i> Quantity:</label>
+                <input type="text" class="form-control" name="qun" value="{{b3.Available_quantity}}" required>
+            </div>
+            <div class="mb-3">
+                <label class="form-label"><i class="fas fa-dollar-sign"></i> Price:</label>
+                <input type="number" class="form-control" name="prc" value="{{b3.Price}}" required>
+            </div>
+            <div class="mb-3">
+                <label class="form-label"><i class="fas fa-calendar-plus"></i> Mfg Date:</label>
+                <input type="date" class="form-control" name="mfgdt" value="{{b3.mfg_Date}}" required>
+            </div>
+            <div class="mb-3">
+                <label class="form-label"><i class="fas fa-calendar-times"></i> Exp Date:</label>
+                <input type="date" class="form-control" name="expdt" value="{{b3.Exp_Date}}" required>
+            </div>
+            <div class="text-center">
+                <button type="submit" class="btn btn-success"><i class="fas fa-save"></i> Submit</button>
+            </div>
+        </form>
+        <h3 class="text-center text-success mt-3">{{msg}}</h3>
+    </div>
+</div>
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<form action="{% url 'diseas' %}" method="POST">
+    {% csrf_token %}
+    <table>
+        <tr>
+            <th>Diseas</th>
+            <th><input type="text" name="dis" placeholder="Enter Disease Name" required></th>
+        </tr>
+        <tr>
+            <th>Medicines</th>
+            <th><input type="text" name="med" placeholder="Enter medicines separated by commas" required></th>
+        </tr>
+
+        <tr>
+            <th colspan="2"><input type="submit" value="Submit"></th>
+        </tr>
+    </table>
+</form>
+</body>
+</html>

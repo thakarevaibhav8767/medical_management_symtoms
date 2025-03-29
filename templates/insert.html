@@ -1,0 +1,114 @@
+
+<!--<!DOCTYPE html>-->
+<!--<html lang="en">-->
+<!--<head>-->
+<!--    <meta charset="UTF-8">-->
+<!--    <title>Title</title>-->
+<!--</head>-->
+<!--<body>-->
+<!--<form action="{% url 'insertmed' %}" method="POST">-->
+<!--    {% csrf_token %}-->
+<!--    <table>-->
+<!--        <tr>-->
+<!--            <th>Med Id: </th>-->
+<!--            <th><input type="number" name="mid"></th>-->
+<!--        </tr>-->
+<!--        <tr>-->
+<!--            <th>Med Name : </th>-->
+<!--            <th><input type="text" name="mname"> </th>-->
+<!--        </tr>-->
+<!--        <tr>-->
+<!--            <th>Quantity : </th>-->
+<!--            <th><input type="number" name="qun"></th>-->
+<!--        </tr>-->
+<!--        <tr>-->
+<!--            <th>Price : </th>-->
+<!--            <th><input type="number" name="prc"></th>-->
+<!--        </tr>-->
+<!--        <tr>-->
+<!--            <th>Mfg_Date : </th>-->
+<!--            <th><input type="date" name="mfgdt"></th>-->
+<!--        </tr>-->
+<!--        <tr>-->
+<!--            <th>Exp_Date : </th>-->
+<!--            <th><input type="date" name="expdt"></th>-->
+<!--        </tr>-->
+<!--        <tr>-->
+<!--            <th colspan="2"><input type="submit" value="Submit"></th>-->
+<!--        </tr>-->
+<!--    </table>-->
+<!--</form>-->
+<!--<h1>{{msg}}</h1>-->
+
+<!--</body>-->
+<!--</html>-->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Medicine Form</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- FontAwesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+<style>
+     .header-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            background-color: #343a40;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+</style>
+</head>
+<body class="bg-light">
+<div class="header-container">
+{% include 'header2.html' %}
+</div>
+<div class="container mt-5">
+    <div class="card shadow p-4">
+        <h2 class="text-center mb-4">Insert Medicine</h2>
+        <form action="{% url 'insertmed' %}" method="POST">
+            {% csrf_token %}
+            <div class="mb-3">
+                <label class="form-label"><i class="fas fa-barcode"></i> Med Id:</label>
+                <input type="number" class="form-control" name="mid" required>
+            </div>
+            <div class="mb-3">
+                <label class="form-label"><i class="fas fa-pills"></i> Med Name:</label>
+                <input type="text" class="form-control" name="mname" required>
+            </div>
+            <div class="mb-3">
+                <label class="form-label"><i class="fas fa-box"></i> Quantity:</label>
+                <input type="number" class="form-control" name="qun" required>
+            </div>
+            <div class="mb-3">
+                <label class="form-label"><i class="fas fa-dollar-sign"></i> Price:</label>
+                <input type="number" class="form-control" name="prc" required>
+            </div>
+            <div class="mb-3">
+                <label class="form-label"><i class="fas fa-calendar-plus"></i> Mfg Date:</label>
+                <input type="date" class="form-control" name="mfgdt" required>
+            </div>
+            <div class="mb-3">
+                <label class="form-label"><i class="fas fa-calendar-times"></i> Exp Date:</label>
+                <input type="date" class="form-control" name="expdt" required>
+            </div>
+            <div class="text-center">
+                <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Submit</button>
+            </div>
+        </form>
+        <h3 class="text-center text-success mt-3">{{msg}}</h3>
+    </div>
+</div>
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
+{% include 'footer.html' %}
+

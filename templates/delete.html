@@ -1,0 +1,70 @@
+<!--<!DOCTYPE html>-->
+<!--<html lang="en">-->
+<!--<head>-->
+<!--    <meta charset="UTF-8">-->
+<!--    <title>Title</title>-->
+<!--</head>-->
+<!--<body>-->
+<!--<form action="{% url 'deleterec' %}" method="POST">-->
+<!--    {% csrf_token %}-->
+<!--    <table>-->
+<!--        <tr>-->
+<!--            <th>Med Id:</th>-->
+<!--            <th><input type="number" name="medid" placeholder="Enter Your Med Id"></th>-->
+<!--        </tr>-->
+<!--        <tr>-->
+<!--            <th colspan="2"><input type="submit" value="Delete"></th>-->
+<!--        </tr>-->
+<!--    </table>-->
+<!--</form>-->
+<!--<h1>{{msg}}</h1>-->
+<!--</body>-->
+<!--</html>-->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Delete Medicine</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+<style>
+     .header-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            background-color: #343a40;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+</style>
+</head>
+<body class="bg-light">
+<div class="header-container">
+{% include 'header2.html' %}
+</div>
+<div class="container mt-5">
+    <div class="card shadow p-4">
+        <h2 class="text-center text-danger">Delete Medicine</h2>
+        <form action="{% url 'deleterec' %}" method="POST">
+            {% csrf_token %}
+            <div class="mb-3">
+                <label class="form-label fw-bold">Med Id:</label>
+                <input type="number" class="form-control" name="medid" placeholder="Enter Your Med Id" required>
+            </div>
+            <div class="text-center">
+                <button type="submit" class="btn btn-danger"><i class="fas fa-trash"></i> Delete</button>
+            </div>
+        </form>
+        <h3 class="text-center text-success mt-3">{{msg}}</h3>
+    </div>
+</div>
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<!-- FontAwesome for icons -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"></script>
+</body>
+</html>
+{% include 'footer.html' %}

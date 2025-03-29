@@ -1,0 +1,130 @@
+<!--<!DOCTYPE html>-->
+<!--<html lang="en">-->
+<!--<head>-->
+<!--    <meta charset="UTF-8">-->
+<!--    <title>Title</title>-->
+<!--</head>-->
+<!--<body>-->
+<!--<form  method="POST">-->
+<!--    {% csrf_token %}-->
+<!--    <table>-->
+<!--        <tr>-->
+<!--            <th>User Id :</th>-->
+<!--            <th>{{ form.userid }}</th>-->
+<!--        </tr>-->
+<!--        <tr>-->
+<!--            <th>Password : </th>-->
+<!--            <th>{{ form.password }}</th>-->
+<!--        </tr>-->
+<!--        <tr>-->
+<!--            <th colspan="2"><input type="submit" value="Submit"></th>-->
+<!--        </tr>-->
+<!--    </table>-->
+<!--</form>-->
+<!--<h1>{{msg}}</h1>-->
+
+<!--</body>-->
+<!--</html>-->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Login</title>
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
+
+    <style>
+        body {
+            background: linear-gradient(135deg, #ff9a9e, #fad0c4);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .login-container {
+            background: rgba(255, 255, 255, 0.3);
+            backdrop-filter: blur(10px);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            color: white;
+            max-width: 400px;
+            width: 100%;
+            text-align: center;
+        }
+
+        .form-control {
+            background: rgba(255, 255, 255, 0.8);
+            color: black;
+            border: 1px solid #ccc;
+        }
+
+        .form-control::placeholder {
+            color: rgba(0, 0, 0, 0.6);
+        }
+
+        .btn-custom {
+            background-color: #ff5733;
+            color: white;
+            font-size: 1rem;
+            padding: 10px;
+            border-radius: 30px;
+            width: 100%;
+            transition: 0.3s;
+        }
+
+        .btn-custom:hover {
+            background-color: #e64728;
+            transform: scale(1.05);
+        }
+
+     .header-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            background-color: #343a40;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+    </style>
+</head>
+<body>
+<div class="header-container">
+{% include 'header2.html' %}
+</div>
+
+<div class="login-container">
+    <h2><i class="bi bi-person-circle"></i> User Login</h2>
+    <form  method="POST">
+        {% csrf_token %}
+
+        <div class="mb-3">
+            <label class="form-label"><i class="bi bi-person"></i> User ID:&ensp;</label>
+            {{ form.userid }}
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label"><i class="bi bi-lock"></i> Password:</label>
+            {{ form.password }}
+        </div>
+
+        <button type="submit" class="btn btn-custom">Login</button>
+    </form>
+
+    <h4 class="mt-3">{{ msg }}</h4>
+</div>
+
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>
