@@ -278,33 +278,39 @@ def purchasehist(req):
 
 
 from decimal import Decimal
-from django.shortcuts import render, redirect
-
-from .predctions import DiseasePrediction  # Assuming predictor module exists
+from django.shortcuts import render
 from datetime import date
-
-predictor = DiseasePrediction()
+from .models import diseas  # Ensure your model is imported
+from .predctions import disease_predictor  # Import the modified predictor
 
 
 def symtoms(req):
     if req.method == 'POST':
-
-        # **STEP 1: Predict Disease**
         if 'predict_disease' in req.POST:
             req.session['cart'] = []  # Clear cart when new symptoms are submitted
 
-            a = req.POST.get('symtom1', '').strip()
-            b = req.POST.get('symtom2', '').strip()
-            c = req.POST.get('symtom3', '').strip()
+            symptom1 = req.POST.get('symtom1', '').strip()
+            symptom2 = req.POST.get('symtom2', '').strip()
+            symptom3 = req.POST.get('symtom3', '').strip()
+            symptoms = [symptom for symptom in [symptom1, symptom2, symptom3] if symptom]
 
-            predicted_disease = predictor.predict_disease(a, b, c)
+            if not symptoms:
+                return render(req, 'symtoms.html', {'msg': "Please enter at least one symptom."})
 
-            try:
-                disease_obj = diseas.objects.get(diseas1=predicted_disease)
-                medicines_list = [med.strip() for med in disease_obj.medicines.split(",")]
-            except diseas.DoesNotExist:
+            # Use ML Model to Predict Disease
+            predicted_disease = disease_predictor.predict_disease(symptoms)
+            if "Prediction Error" in predicted_disease:
+                return render(req, 'symtoms.html', {'msg': predicted_disease})
+
+            # Fetch Disease Details from Database
+            disease_obj = diseas.objects.filter(diseas1=predicted_disease).first()
+            if not disease_obj:
                 return render(req, 'symtoms.html', {'msg': "Disease not found in database."})
 
+            # Get Recommended Medicines
+            medicines_list = [med.strip() for med in disease_obj.medicines.split(",")]
+
+            # Store Data in Session
             req.session['predicted_disease'] = predicted_disease
             req.session['medicines_list'] = medicines_list
 
@@ -315,83 +321,8 @@ def symtoms(req):
                 'today_date': date.today().isoformat()
             })
 
-        # **STEP 2: Add Medicine to Cart & Validate Stock**
-        elif 'add_medicine' in req.POST:
-            user_id=req.POST.get('uid')
-            medname = req.POST.get('medname')
-            quan = int(req.POST.get('quan'))
-            date_selected = req.POST.get('date', date.today().isoformat())  # Default to today
-
-            try:
-                med_obj = medicines.objects.get(med_Name=medname)
-                price = int(med_obj.Price)
-                med_id = int(med_obj.med_Id)
-                available_quantity = int(med_obj.Available_quantity)
-
-                if quan > available_quantity:
-                    return render(req, 'symtoms.html', {
-                        'msg': f"Only {available_quantity} units of {medname} are available.",
-                        'medicines_list': req.session.get('medicines_list', []),
-                        'cart': req.session.get('cart', []),
-                        'today_date': date.today().isoformat()
-                    })
-
-                total_price = price * quan
-            except medicines.DoesNotExist:
-                return render(req, 'symtoms.html', {'msg': "Medicine not found.", 'cart': req.session.get('cart', []),
-                                                    'today_date': date.today().isoformat()})
-
-
-            cart = req.session.get('cart', [])
-            cart.append({
-                'user_id': user_id,
-                'med_id': med_id,
-                'med_name': medname,
-                'quantity': quan,
-                'price': price,
-                'total_price': total_price,
-                'date': date_selected
-            })
-            req.session['cart'] = cart
-
-            medicines_list = req.session.get('medicines_list', [])
-            if medname in medicines_list:
-                medicines_list.remove(medname)
-                req.session['medicines_list'] = medicines_list
-
-            return render(req, 'symtoms.html', {
-                'msg': "Medicine added to cart!",
-                'medicines_list': medicines_list,
-                'cart': cart,
-                'today_date': date.today().isoformat()
-            })
-
-    # **STEP 3: Confirm Purchase**
-    elif req.method == 'GET' and 'confirm' in req.GET:
-        cart = req.session.get('cart', [])
-
-
-        # Debugging: Print user ID before saving
-
-
-        for item in cart:
-            purchase_entry = purchase(
-                User_Id=item['user_id'],
-                med_id=item['med_id'],
-                med_name=item['med_name'],
-                quantity=item['quantity'],
-                price=Decimal(item['total_price']),
-                date=item['date']
-            )
-            purchase_entry.save()
-
-        req.session['cart'] = []  # Clear cart after confirming purchase
-        return render(req, 'symtoms.html',
-                      {'msg': "Purchase confirmed! Your cart is now empty.", 'today_date': date.today().isoformat()})
-
     return render(req, 'symtoms.html', {
         'medicines_list': req.session.get('medicines_list', []),
         'cart': req.session.get('cart', []),
-
         'today_date': date.today().isoformat()
     })
